@@ -231,8 +231,10 @@ include "navi.php";
                   </td>
               </tr>
             <tr>
+			<td></td>
+
             <td colspan="2">
-                        <input type=submit value="tampilkan >>" id="go" name="go" class="button"><br>
+                        <input type=submit value="submit" id="go" name="go" class="button"><br>
             </td>
             </tr>
 

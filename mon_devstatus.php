@@ -58,6 +58,12 @@ mysql_free_result($result);
 	<script src="js/jquery.jqGrid.min.js" type="text/javascript"></script> 
 	<script src="js/jquery.searchFilter.js" type="text/javascript"></script>
 
+	<!-- Data Tables -->
+    <link href="css/plugins/dataTables/dataTables.bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.responsive.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/dataTables.tableTools.min.css" rel="stylesheet">
+
+
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js"></script>
 
 <script type="text/javascript">
@@ -206,7 +212,50 @@ include "navi.php";
 
 
 <div class="wrapper wrapper-content">
+ <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Status<i> - Realtime Online</i></h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                           
+                            
+                            <a class="close-link">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                  <table id="example" class="table table-striped table-bordered table-hover dataTables-example" >
+                    <thead>
+                      <tr>
+                       <th>ID</th>
+					   <th>WajibPajak</th>
+                        <th>Alamat</th>
+						<th>Status</th>
 
+
+                      </tr>
+                    </thead>
+                    
+                    <tfoot>
+                      <tr>
+                       <th>ID</th>
+					   <th>WajibPajak</th>
+                        <th>Alamat</th>
+						<th>Status</th>
+
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div><!-- /.box-body -->
+              </div><!-- /.box -->
+
+            
+            </div><!-- /.col -->
+          </div><!-- /.row -->
 <div class="row">
                 <div class="col-md-12">
                     <div class="ibox ">
@@ -257,6 +306,11 @@ include "navi.php";
    
    
   
+<!-- Data Tables -->
+    <script src="js/plugins/dataTables/jquery.dataTables.js"></script>
+    <script src="js/plugins/dataTables/dataTables.bootstrap.js"></script>
+    <script src="js/plugins/dataTables/dataTables.responsive.js"></script>
+    <script src="js/plugins/dataTables/dataTables.tableTools.min.js"></script>
 
    
 
@@ -266,7 +320,26 @@ include "navi.php";
     <script src="js/inspinia.js"></script>
     <script src="js/plugins/pace/pace.min.js"></script>
 
-	
+	<script>
+      $(document).ready(function() {
+        var table = $('#example').DataTable( {
+		dom: 'Br',
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ], 	
+        "processing": true,
+        "serverSide": true,
+        "ajax": "scripts/srvproc_status.php"
+      } );
+	  
+      
+
+	  $('#example tbody').on('click', 'tr', function () {
+        var data = table.row(this).data();
+        console.log(data[0]);
+      });
+     } );
+    </script>
 
 		
 

@@ -77,7 +77,7 @@ include "navi.php";
                     <h2>TAX MONITORING SYSTEM</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="main.php">Home</a>
+                            <a href="index.php">Home</a>
                         </li>
                         <li class="active">
                             <strong>DASHBOARD</strong>

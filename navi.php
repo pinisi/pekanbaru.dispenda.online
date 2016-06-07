@@ -14,8 +14,8 @@
                     <ul class="nav nav-second-level">
                         <li ><a href="#">User</a></li>
                         <li ><a href="mst_device.php">Wajib Pajak</a></li>
-                        <li ><a href="#">Kategori Pajak</a></li>
-                        <li ><a href="#">Perangkat</a></li>
+                        <li ><a href="mst_kategori.php">Kategori Pajak</a></li>
+                      
                     </ul>
                 </li>
                 
@@ -24,14 +24,14 @@
                     <ul class="nav nav-second-level">
                         <li><a href="tr_detail.php">Detail Transaksi</a></li>
                         <li><a href="rpt_harian.php">Laporan Harian</a></li>
-                        <li><a href="#">Laporan Bulanan</a></li>
+                        <li><a href="rpt_bulanan.php">Laporan Bulanan</a></li>
                     </ul>
                 </li>
                 
                 <li>
                     <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Monitoring</span><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
-                        <li><a href="#">Ketersediaan Data</a></li>
+                    
                         <li><a href="mon_devstatus.php">Status Perangkat</a></li>
                         
                     </ul>
