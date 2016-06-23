@@ -43,21 +43,24 @@ if (isset($_GET['merchant'])) {
    if ($_GET['merchant'] == 'all') {
       $where = "";
    } else {
-      $where .= " AND (device.id in ( " . $_GET['merchant']. " ))";
+      $where .= " AND (device.merchantid in ( " . $_GET['merchant']. " ))";
    }
 }
 
-if (isset($_GET["tanggal1"]) && isset($_GET["tanggal2"])) {
-   $where .= " AND (tgltransaksi between concat(str_to_date('" . $_GET["tanggal1"] ."','%d/%m/%Y'),' 00:00:00')"
-   . " AND concat(str_to_date('" . $_GET['tanggal2'] . "','%d/%m/%Y'),' 23:59:59'))";   
+if (isset($_GET["start"]) && isset($_GET["end"])) {
+   $where .= " AND (tgltransaksi between concat(str_to_date('" . $_GET["start"] ."','%d/%m/%Y'),' 00:00:00')"
+   . " AND concat(str_to_date('" . $_GET['end'] . "','%d/%m/%Y'),' 23:59:59'))";   
 }
 
 $sql= "SELECT count(*) as count FROM "
-. " ( SELECT device.deviceid FROM struk,device"
-. " WHERE struk.deviceid = device.deviceid"
-. $where . " group by wpName, DATE_FORMAT(tgltransaksi,'%d/%M/%Y')) temp";
+. " ( SELECT device.deviceid FROM struk,device,merchant"
+. " WHERE struk.deviceid = device.deviceid AND device.merchantid = merchant.id"
+. $where . " group by DATE_FORMAT(tgltransaksi,'%d/%M/%Y'), merchantname, deviceid) temp";
 
-mysql_query("INSERT into log (logtext) values (\"" . $sql . "\")");
+
+//echo $sql;
+
+//mysql_query("INSERT into log (logtext) values (\"" . $sql . "\")");
 
 $result = mysql_query($sql);
 $row = mysql_fetch_array($result,MYSQL_ASSOC);
@@ -71,10 +74,10 @@ if( $count >0 ) {
 if ($page > $total_pages) $page=$total_pages;
 $start = $limit*$page - $limit; // do not put $limit*($page - 1)
 
-$SQL = "SELECT wpName, DATE_FORMAT(tgltransaksi,'%d/%M/%Y') as 'tanggal', sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak "
-. " FROM struk,device"
-. " WHERE struk.deviceid = device.deviceid"
-. $where . " group by wpName, DATE_FORMAT(tgltransaksi,'%d/%M/%Y')"
+$SQL = "SELECT merchantname, ucase(device.wpname) as deviceid,DATE_FORMAT(tgltransaksi,'%d/%M/%Y') as 'tanggal', sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak "
+. " FROM struk,device,merchant"
+. " WHERE struk.deviceid = device.deviceid AND device.merchantid = merchant.id"
+. $where . " group by DATE_FORMAT(tgltransaksi,'%d/%M/%Y'), merchantname, deviceid"
 . " ORDER BY $sidx $sord LIMIT $start , $limit";
 
 //mysql_query("INSERT into logs(messages) value('". $_GET['_search']) . "')");
@@ -96,9 +99,10 @@ echo "<records>".$count."</records>";
 $grandtotal = 0;
 while($row = mysql_fetch_array($result,MYSQL_ASSOC)) {
     echo "<row>";
-    echo "<cell>". $row['wpName'] ."</cell>";
+    echo "<cell>". $row['merchantname'] ."</cell>";
+    echo "<cell>". $row['deviceid'] ."</cell>";
     echo "<cell>". $row['tanggal']."</cell>";    
-    echo "<cell>". $row['pajak']."</cell>";
+    echo "<cell>". $row['pajak']."</cell>"; 
     echo "</row>";
     $grandtotal += $row['pajak'];
 }

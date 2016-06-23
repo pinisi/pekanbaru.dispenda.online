@@ -1,4 +1,26 @@
 <?php
+include "init_dbconnection.php";
+$wkrst=mysql_query($mysqli,"SELECT sum(jumlahstruk) as jumlah FROM dataseminggu");
+while ($rws = mysql_fetch_array($wkrst)) {
+	$wkupdate=$rws[0];
+}
+mysql_free_result($wkrst);
+
+
+/* Open connection MySQL database. */
+$mysqli = new mysqli("localhost", "batam", "batam2016", "taxdb");
+     
+ /* Check the connection. */
+ if (mysqli_connect_errno()) {
+     printf("Connect failed: %s\n", mysqli_connect_error());
+            exit();
+  }
+     
+ /* Fetch result set from t_test table */
+$dataku=mysqli_query($mysqli,"SELECT * FROM dataseminggu");
+
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -33,7 +55,7 @@ include "navi.php";
                     <h2>TAX MONITORING SYSTEM</h2>
                     <ol class="breadcrumb">
                         <li>
-                            <a href="index.html">Home</a>
+                            <a href="main.php">Home</a>
                         </li>
                         <li class="active">
                             <strong>DASHBOARD</strong>
@@ -56,7 +78,10 @@ include "navi.php";
         <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
+
                         <h5>Data Transaksi Masuk - <i>Live Traffic</i></h5>
+						
+						
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
@@ -98,32 +123,59 @@ include "navi.php";
             </div><!-- /.col -->
           </div><!-- /.row -->
 
+<?php
+include "init_dbconnection.php";
+$qry=mysql_query("SELECT sum(jumlahstruk) as jumlah FROM dataseminggu");
+while ($rec = mysql_fetch_array($qry)) {
+	$jlh = $rec["jumlah"];
+}
+mysql_free_result($qry);
 
+$wkrst=mysql_query("SELECT CREATED FROM dataseminggu");
+while ($rws = mysql_fetch_array($wkrst)) {
+	$wkupdate=$rws["CREATED"];
+}
+mysql_free_result($wkrst);
+
+
+$monthly = mysql_query("select sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak from struk,device where struk.deviceid = device.deviceid and month(`tgltransaksi`)=MONTH( CURRENT_DATE )");
+while ($r = mysql_fetch_array($monthly)) {
+	$j = $r["pajak"];
+}
+mysql_free_result($monthly);
+
+$yearly = mysql_query("select sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak from struk,device where struk.deviceid = device.deviceid and year(`tgltransaksi`)=YEAR( CURRENT_DATE )");
+while ($r = mysql_fetch_array($yearly)) {
+	$jt = $r["pajak"];
+}
+mysql_free_result($yearly);
+
+?>
 			<div class="row">
                     <div class="col-lg-12">
                         <div class="ibox float-e-margins">
                             <div class="ibox-content">
                                     <div>
                                         <span class="pull-right text-right">
-                                        <small>Information: <strong>Info</strong></small>
+                                        <small>Information: <strong></strong></small>
                                             <br/>
-                                            Jumlah Wajib Pajak : 8.800
+                                            Jumlah Wajib Pajak : 3
                                         </span>
-                                        <h1 class="m-b-xs">RP 50.992.155.000</h1>
-                                        <h3 class="font-bold no-margins">
-                                            Data Pendapatan Pajak Semester I 2016
+                                        <h1 class="m-b-xs">
+                                            Data Pajak - <i>weekly</i>
+                                        </h1>										
+										<h3 class="font-bold no-margins">
+                                            <?php echo "Total : Rp. ".number_format($jlh,2,',','.');?> 
                                         </h3>
 <br>
                                     </div>
-
                                 <div>
                                     <canvas id="lineChart" height="70"></canvas>
                                 </div>
-
                                 <div class="m-t-md">
                                     <small class="pull-right">
                                         <i class="fa fa-clock-o"> </i>
-                                        Update on 20.05.2016
+                                        Update on <?php echo $wkupdate;?> 
                                     </small>
                                    <small>
                                        <strong>Catatan:</strong>
@@ -144,9 +196,9 @@ include "navi.php";
                                 <h5>Penerimaan Pajak</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">20.886.200.000</h1>
-                                <div class="stat-percent font-bold text-success">65% <i class="fa fa-bolt"></i></div>
-                                <small> Total</small>
+                                <h1 class="no-margins"> <?php echo "Rp. ".number_format($j,2,',','.');?> </h1>
+  <!--                              <div class="stat-percent font-bold text-success">65% <i class="fa fa-bolt"></i></div>
+                                <small> Total</small> -->
                             </div>
                         </div>
                     </div>
@@ -157,9 +209,9 @@ include "navi.php";
                                 <h5>Penerimaan Pajak</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">80.900.134.000</h1>
-                                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                                <small>Total</small>
+                                <h1 class="no-margins"><?php echo "Rp. ".number_format($jt,2,',','.');?></h1>
+             <!--                   <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                                <small>Total</small> -->
                             </div>
                         </div>
                     </div>
@@ -167,12 +219,12 @@ include "navi.php";
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <span class="label label-primary pull-right">ONLINE</span>
-                                <h5>Jumlah WP</h5>
+                                <h5>Jumlah WP Online</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">350</h1>
-                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                                <small>Total</small>
+                                <h1 class="no-margins">3</h1>
+<!--                                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
+                                <small>Total</small> -->
                             </div>
                         </div>
                     </div>
@@ -183,9 +235,9 @@ include "navi.php";
                                 <h5>Jumlah WP</h5>
                             </div>
                             <div class="ibox-content">
-                                <h1 class="no-margins">80</h1>
-                                <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
-                                <small>Sejak Launching</small>
+                                <h1 class="no-margins">-</h1>
+                  <!--              <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
+                                <small>Sejak Launching</small> -->
                             </div>
                         </div>
             </div>
@@ -194,21 +246,9 @@ include "navi.php";
         </div>
 
 
- 
-
-
-
-
 
 <!---->
             </div>
-
-
-
-
-
-
-
 
             <div class="footer">
                
@@ -258,28 +298,38 @@ include "navi.php";
     <script>
         $(document).ready(function() {
 
+		var myData=[<?php 
+		while($info=mysqli_fetch_array($dataku))
+        echo '"'.$info['JUMLAHSTRUK'].'",'; /* We use the concatenation operator '.' to add comma delimiters after each data value. */
+		?>];
+		<?php
+		$data=mysqli_query($mysqli,"SELECT * FROM dataseminggu");
+		
+		?>
+		var myLabels=[<?php 
+		while($info=mysqli_fetch_array($data))
+        echo '"'.$info['TANGGAL'].'",';		
+		?>];
+		
+		<?php
+        /* Close the connection */
+        $mysqli->close(); 
+        ?>
+
             var lineData = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: myLabels,
                 datasets: [
+                    
                     {
-                        label: "Target Penerimaan Pajak",
-                        fillColor: "rgba(220,220,220,0.5)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                    {
-                        label: "Example dataset",
+                        label: "Jumlah",
                         fillColor: "rgba(26,179,148,0.5)",
                         strokeColor: "rgba(26,179,148,0.7)",
                         pointColor: "rgba(26,179,148,1)",
                         pointStrokeColor: "#fff",
                         pointHighlightFill: "#fff",
                         pointHighlightStroke: "rgba(26,179,148,1)",
-                        data: [28, 48, 40, 19, 86, 27, 90]
+                        data: myData
+						//data: [65, 59, 80, 81, 56, 55, 40]
                     }
                 ]
             };
@@ -287,6 +337,10 @@ include "navi.php";
             var lineOptions = {
                 scaleShowGridLines: true,
                 scaleGridLineColor: "rgba(0,0,0,.05)",
+				scaleSteps:100,
+				scaleLabel : function(label){return  ' Rp. ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");},
+                scaleStartValue:0,
+                scaleStepWidth:50000,
                 scaleGridLineWidth: 1,
                 bezierCurve: true,
                 bezierCurveTension: 0.4,
@@ -298,6 +352,7 @@ include "navi.php";
                 datasetStrokeWidth: 2,
                 datasetFill: true,
                 responsive: true,
+				tooltipTemplate : function (label) {return ' Rp. ' + label.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");} 
             };
 
 
@@ -327,11 +382,15 @@ include "navi.php";
         buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
         ], 	
+		"bSort": true,
+		"order": [[ 3, "desc" ]],
         "processing": true,
         "serverSide": true,
         "ajax": "scripts/server_processing.php"
       } );
-	  
+	  setInterval( function () {
+            table.ajax.reload();
+      }, 30000 );
       
 
 	  $('#example tbody').on('click', 'tr', function () {

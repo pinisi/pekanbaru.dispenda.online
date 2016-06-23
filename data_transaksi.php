@@ -43,13 +43,13 @@ if (isset($_GET['merchant'])) {
    if ($_GET['merchant'] == 'all') {
       $where = "";
    } else {
-      $where .= " AND (device.id in ( " . $_GET['merchant']. " ))";
+      $where .= " AND (device.merchantid in ( " . $_GET['merchant']. " ))";
    }
 }
 
-if (isset($_GET["tanggal1"]) && isset($_GET["tanggal2"])) {
-   $where .= " AND (tgltransaksi between concat(str_to_date('" . $_GET["tanggal1"] ."','%d/%m/%Y'),' 00:00:00')"
-   . " AND concat(str_to_date('" . $_GET['tanggal2'] . "','%d/%m/%Y'),' 23:59:59'))";
+if (isset($_GET["start"]) && isset($_GET["end"])) {
+   $where .= " AND (tgltransaksi between concat(str_to_date('" . $_GET["start"] ."','%d/%m/%Y'),' 00:00:00')"
+   . " AND concat(str_to_date('" . $_GET['end'] . "','%d/%m/%Y'),' 23:59:59'))";
 }
 
 //$result = mysql_query("SELECT COUNT(*) AS count FROM struk");
@@ -71,11 +71,11 @@ $start = $limit*$page - $limit; // do not put $limit*($page - 1)
 
 //$limit = 30;
 //$SQL = "select deviceid,nostruk,msisdn,kategori,tgltransaksi,jumlah from v_strukmerchant"
-$SQL = "SELECT struk.id as id,struk.deviceid as deviceid, struk.nostruk as nostruk,device.wpname as merchantname"
+$SQL = "SELECT struk.id as id,struk.deviceid as deviceid, struk.nostruk as nostruk,merchant.merchantname"
 . ", (select kategori_name from kategori where device.kategoriid = id) as kategori_name"
 . ",struk.tgltransaksi as tgltransaksi,struk.jumlah as jumlah"
 . ", round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 2) as pajak"
-. " FROM struk,device WHERE struk.deviceid = device.deviceid"
+. " FROM struk,device,merchant WHERE struk.deviceid = device.deviceid AND device.merchantid = merchant.id"
 .$where." ORDER BY $sidx $sord LIMIT $start , $limit";
 
 //mysql_query("INSERT into logs(messages) value('". $_GET['_search']) . "')");

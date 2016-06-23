@@ -22,7 +22,7 @@
 $table = 'v_livetraffic';
  
 // Table's primary key
-$primaryKey = 'nostruk';
+$primaryKey = 'tgltransaksi';
  
 // Array of database columns which should be read and sent back to DataTables.
 // The `db` parameter represents the column name in the database, while the `dt`

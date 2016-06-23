@@ -1,86 +1,60 @@
 <?php
-require_once "secure.php";
-include("init_dbconnection.php");
+//if (!defined('BASEPATH')) exit('No direct script access allowed');
 
-$merchantid="0";
-$crudTableName = "device";
+if ( $_POST ) {
+  include_once('config.php');
+  include_once 'Classes/Database.php';
+  include_once 'Classes/Merchant.php';
+  include_once 'Classes/Device.php';
 
-$crudColumns =  array(
-	'deviceid'=>'deviceid'
-	,'wpname'=>'wpname'
-	,'merchantid'=>'merchantid'
-        ,'kategoriid'=>'kategoriid'
-        ,'status'=>'status' 
-);
 
-if (isset($_REQUEST['merchantname'])) {
-   $sql = "SELECT id FROM merchant WHERE merchantname = '" . $_REQUEST['merchantname'] . "'";
-   $result = mysql_query($sql);
-   $row = mysql_fetch_array($result,MYSQL_ASSOC);
-   $merchantid = $row['id'];
+  if ($_POST['oper']) {
+
+    $DBPDO = new Database();
+    $db = $DBPDO->getConnection($DBPDO);
+
+    $device   = new Device($db);
+    $merchant = new Merchant($db);
+     
+    switch ($_POST['oper']) {
+       case "c":  //create    
+            if (  !$device->checkExists($_POST['deviceid'], $_POST['wpname']) ) {
+              $device->deviceID = $_POST['deviceid'];
+              $device->msisdn = $_POST['msisdn'];
+              $device->merchantid = $_POST['wpname'];
+              $device->kategoriid = $_POST['kategori'];
+              $device->address = $_POST['address'];                           
+              $res = $device->create();
+              echo $res;
+            } else {
+              echo "already-exists";
+            }           
+            break;
+       case "r": //read         
+            $device->id = $_POST['id'];
+            $device =  $device->readById();
+            echo json_encode($res);
+            break;
+       case "u": //update
+            if (  !$device->checkExistsDiffId($_POST['deviceid'],$_POST['id']) ) {
+                $device->deviceID = $_POST['deviceid'];
+                $device->msisdn = $_POST['msisdn'];
+                $device->merchantid = $_POST['wpname'];
+                $device->kategoriid = $_POST['kategori'];
+                $device->address = $_POST['address'];                           
+                $device->id     = $_POST['id'];
+                echo $res = $device->update();
+            } else {
+                echo "already-exists";
+            }           
+
+            break;           
+       case "d": //delete
+            $device->id = $_POST['id'];
+            $res = $device->delete();
+            echo $res;
+            break;      
+    }
+  }
 }
-
-if (isset($_REQUEST['kategori_name'])) {
-   $sql = "SELECT id FROM kategori WHERE kategori_name = '" . $_REQUEST['kategori_name'] .  "'";
-   $result = mysql_query($sql);
-   $row = mysql_fetch_array($result,MYSQL_ASSOC);
-   $kategoriid = $row['id'];
-}
-
-
-function fnCleanInputVar($string){
-	//$string = mysql_real_escape_string($string);
-	return $string;
-}
-
-foreach ($crudColumns as $key => $value){ 
-        if ($key=='merchantid') {
-           $crudColumnValues[$key] = $merchantid; 
-        }elseif( $key=='kategoriid' ) {
-           $crudColumnValues[$key] = $kategoriid;
-	}elseif(isset($_REQUEST[$key])){
-	   $crudColumnValues[$key] = '"'.fnCleanInputVar($_REQUEST[$key]).'"';
-	}
-}
-
-
-if ($_REQUEST['oper'] == "edit") {
-   if (isset($_REQUEST['id'])) {
-      $crudColumnValues['id'] = '"'.fnCleanInputVar($_REQUEST['id']).'"';
-   }
-  
-   $sql = 'UPDATE '.$crudTableName.' SET ';
-   foreach($crudColumns as $key => $value){ 
-         $updateArray[$key] = $value.'='.$crudColumnValues[$key]; 
-   };
-   $sql .= implode(',',$updateArray);
-   $sql .= ' WHERE id = '.$crudColumnValues['id'];
-
-   mysql_query( $sql ) 
-   or die();
-
-}
-elseif ($_REQUEST['oper'] == "add") {
-   $sql = 'INSERT INTO '.$crudTableName.'(';
-		
-   $sql .= implode(',',$crudColumns);
-   $sql .= ')VALUES(';
-		
-   $sql .= implode(',',$crudColumnValues);
-		
-   $sql .= ')';
-   
-   $result = mysql_query( $sql );
-}
-elseif ($_REQUEST['oper'] == "del") {
-   if (isset($_REQUEST['id'])) {
-      $crudColumnValues['id'] = '"'.fnCleanInputVar($_REQUEST['id']).'"';
-   }
-
-   $sql = 'DELETE FROM '.$crudTableName.' WHERE id = '.$crudColumnValues['id'];
-    
-   $result = mysql_query( $sql );
-
-}
-
-?>
+?>  
