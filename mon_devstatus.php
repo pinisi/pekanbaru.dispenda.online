@@ -8,8 +8,8 @@ if(!empty ($_SESSION['long']))
 	$zoom="13";
 }else
 {
-    $long="104.0196139";
-    $lat="1.1266414";
+    $long="101.430248";
+    $lat="0.535452";
 	$zoom="13";
 	$status="";    
 }
@@ -150,6 +150,8 @@ function setstatus(stat){
     status = stat;
 }
 
+
+
 function setinfo(petak, nomor){
     google.maps.event.addListener(petak, 'click', function() {
   		/*
@@ -173,11 +175,15 @@ function setinfo(petak, nomor){
         $("#teksdes").html(desx[nomor]);
  
  });
+
+  $("#tutup").click(function(){
+        $("#jendelainfo").fadeOut();
+    });
 }
 </script>
 
 <style type="text/css">
-#jendelainfo{position:absolute;z-index:1;top:400;overflow: hidden;left:300px;top:350px;background-color:blue;display:none;}
+#jendelainfo{position:absolute;z-index:1;top:100;overflow: hidden;left:400px;top:950px;background-color:blue;display:none;}
 </style>
 
 
@@ -202,16 +208,73 @@ include "navi.php";
                     </ol>
                 </div>
                 <div class="col-sm-8">
+				<!--
                     <div class="title-action">
 					<small>Didukung oleh</small>
                         <img alt="image" src="img/Logo-Bank-Riau-Kepri-transparent-bg.png" width='280' height='50' align='center'/>
                     </div>
+				-->
                 </div>
             </div>
 
 
 
 <div class="wrapper wrapper-content">
+<div class="row">
+            <div class="col-lg-3">
+                <div class="widget style1 lazur-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-list fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> TOTAL </span>
+                            <h2 class="font-bold">7</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 navy-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-check fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> OK </span>
+                            <h2 class="font-bold">6</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 yellow-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-exclamation fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> WARNING </span>
+                            <h2 class="font-bold">0</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="widget style1 red-bg">
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <i class="fa fa-times fa-5x"></i>
+                        </div>
+                        <div class="col-xs-8 text-right">
+                            <span> CRITICAL </span>
+                            <h2 class="font-bold">1</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div class="row">
  <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
@@ -219,9 +282,7 @@ include "navi.php";
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
-                            </a>
-                           
-                            
+                            </a>                                                     
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
@@ -235,8 +296,6 @@ include "navi.php";
 					   <th>WajibPajak</th>
                         <th>Alamat</th>
 						<th>Status</th>
-
-
                       </tr>
                     </thead>
                     
@@ -251,46 +310,29 @@ include "navi.php";
                     </tfoot>
                   </table>
                 </div><!-- /.box-body -->
-              </div><!-- /.box -->
-
-            
+              </div><!-- /.box -->            
             </div><!-- /.col -->
           </div><!-- /.row -->
 <div class="row">
                 <div class="col-md-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Device Status</h5>
+                            <h5>Lokasi Perangkat</h5>
                         </div>
                         <div class="ibox-content">
-
                             <div style="height: 650px; width: 100%;" class="google-map" id="petaku"></div>
                         </div>
-                    </div>
-
-               
-            </div>
-
-                
-			
+                    </div>             
+            </div>               			
 <!---->
             </div>
-
-
-
-            <div class="footer">
-               
-                <div>
-                    <strong>Copyright</strong> LuxTax &copy; 2016
-                </div>
-            </div>
-
+            <?php
+include "footer.php";
+?>
         </div>
         </div>
 
-     <!-- Mainly scripts -->
-    
-    
+     <!-- Mainly scripts -->    
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
@@ -341,8 +383,20 @@ include "navi.php";
      } );
     </script>
 
-		
 
+<table id="jendelainfo" border="0" cellpadding="4" cellspacing="0" style="border-collapse: collapse" bordercolor="#fff" width="300" height="136">
+  <tr>
+    <td width="248" bgcolor="#6698FF" height="19">
+	<font color='white'><p align="center"><span id="teksjudul"></span></font></td>
+    <td width="30" bgcolor="#6698FF" height="19">
+    <p align="center"><a style="cursor:pointer;color:#fff;" id="tutup"><b>x</b></a></td>
+  </tr>
+  <tr>
+    <td width="290" bgcolor="#ffffff" height="50" valign="top" colspan="2">
+    <p align="left"><span id="teksdes"></span></td>
+  </tr>
+  
+</table>
 
 </body>
 

@@ -4,9 +4,13 @@ session_start();
 <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
 <br>
+<!--
 		<span align='center'>
                             <img alt="image" src="img/Batam.png" width='110' height='100' align='center'/>
                              </span>
+							 TAX MONITORING SYSTEM
+-->
+
             <ul class="nav" id="side-menu">
 			<br>
                 <?php 
@@ -41,15 +45,16 @@ session_start();
                     <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">Monitoring</span><span class="fa arrow"></span> </a>
 					<ul class="nav nav-second-level">
                     
-                        <li><a href="mon_devstatus.php">Status Perangkat</a></li>
+                        <li><a href="mon_datastatus.php">Status Ketersediaan Data</a></li>
                         
                     </ul>
                 </li>
-                
+<!--                
 				<li>
                     <a href="gallery.php"><i class="fa fa-picture-o"></i> <span class="nav-label">Gallery</span></a>
                     
                 </li>
+-->
                
                 
                
@@ -72,7 +77,7 @@ session_start();
         </div>
             <ul class="nav navbar-top-links navbar-right">
                 <li>
-                    <span class="m-r-sm text-muted welcome-message">Tax Monitoring System | Pemerintah Kota Batam </span>
+                    <span class="m-r-sm text-muted welcome-message">Tax Monitoring System | Pemerintah Kota</span>
                 </li>
                 
                 <li class="dropdown">
@@ -103,13 +108,10 @@ session_start();
                                     <small class="text-muted"></small>
                                 </div>
                             </div>
-                        </li>
-                        
+                        </li>                        
                     </ul>
                 </li>
-
             </ul>
-
         </nav> 
 		</div>
 
