@@ -1,6 +1,5 @@
 <?php
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>E-Tax | Login</title>
+    <title>Tax Monitoring System | Login</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -20,34 +19,20 @@
 
 <body class="gray-bg">
 
-    <div class="loginColumns animated fadeInDown">
-        <div class="row">
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+		<img alt="image" src="img/LogoKabupatenKarawang.png" width='120' height='140'/>
 
-            <div class="col-md-6">
-                <h2 class="font-bold">Welcome to E-Tax</h2>
+            <div>
 
-                
-                <h3>
-                    Sistem Aplikasi Pajak Daerah Online
-                </h3>
-
-                <p>
-                    Merupakan sebuah sistem untuk memantau pendapatan pajak daerah sektor PHRI dan Parkir
-                </p>
-				<br>
-<!--
-				<p>
-                    Gunakan akun berikut untuk login.
-                <br>
-					<small>username : <strong>demo</strong></small>
-<br>
-					<small>password : <strong>demo1234</strong></small>
-					</p>
--->
+      <h2>TAX MONITORING SYSTEM</h2>
+<h3>KABUPATEN KARAWANG</h3>
             </div>
-            <div class="col-md-6">
-                <div class="ibox-content">
-                     <form class="m-t" role="form" action="act_login.php" method="post">
+           BADAN PENDAPATAN DAERAH
+            <br>
+			<br>
+            <p><small>Masukkan username dan password Anda</small></p>
+            <form class="m-t" role="form" action="act_login.php" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" id="txtUser" name="txtUser" placeholder="Username" required="">
                 </div>
@@ -55,32 +40,24 @@
                     <input type="password" class="form-control" placeholder="Password" id="txtPassword" name="txtPassword" required="">
                 </div>
                 <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
-
-                       
-                    </form>
-                    <p class="m-t">
-                        <small></small>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <hr/>
-<!--
-		<div class="title-action">
-					
-                        <img alt="image" src="img/how-it-works.png" width='100%' height='550' align='center'/>
-                    </div>
-		<hr/>
--->
-        <div class="row">
-            <div class="col-md-6">
-                Dinas Pendapatan Daerah - Pemerintah Kota Pekanbaru
-            </div>
-            <div class="col-md-6 text-right">
-               <small>© 2016</small>
-            </div>
+<br>
+<br>
+                <p>Didukung oleh:</p>
+           <img alt="image" src="img/LOGOBANKBJB.png" width='220' height='60' align='center'/>
+		  <br>
+		  <br>
+		  <br>
+		  <br>
+		  <p><strong>Copyright</strong> PT Pinisi Elektra	&copy; 2016</p>
         </div>
     </div>
 
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
 </body>
+
+
+
 </html>

@@ -143,15 +143,15 @@ $pdf = new FPDF_CellFit();
 
 $pdf->addPage();
 
-$pdf->Image('img/logo_batam.jpg', 8, 10,13); 
+$pdf->Image('img/LogoKabupatenKarawang.png', 8, 10,13); 
 
 ////////////////////////HEADER START ////////////////////////////////
 //// HEADER 1 ////
 
 
 $pdf->setFont('Arial','B',10);
-$pdf->setXY(15,7); $pdf->Cell(70,10,'PEMERINTAH KOTA BATAM',0,0,'C');
-$pdf->setXY(15,12); $pdf->Cell(70,10,'DINAS PENDAPATAN DAERAH',0,0,'C');
+$pdf->setXY(15,7); $pdf->Cell(70,10,'PEMERINTAH KABUPATEN KARAWANG',0,0,'C');
+$pdf->setXY(15,12); $pdf->Cell(70,10,'BADAN PENDAPATAN DAERAH',0,0,'C');
 $pdf->setFont('','',10);
 $pdf->setXY(15,17); $pdf->Cell(70,10,'Jl. ',0,0,'C');
 $pdf->setXY(15,22); $pdf->Cell(70,10,'Tlp. ',0,0,'C');

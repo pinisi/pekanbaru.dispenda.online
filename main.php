@@ -77,7 +77,7 @@ while ($r = mysql_fetch_array($daily)) {
 mysql_free_result($daily);
 
 
-$monthly = mysql_query("select sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak from struk,device where struk.deviceid = device.deviceid and month(`tgltransaksi`)=MONTH( CURRENT_DATE )");
+$monthly = mysql_query("select sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 0)) as pajak from struk,device where struk.deviceid = device.deviceid and month(`tgltransaksi`)=MONTH( CURRENT_DATE ) and year(`tgltransaksi`)=YEAR( CURRENT_DATE )");
 while ($r = mysql_fetch_array($monthly)) {
 	$j = $r["pajak"];
 }
@@ -116,7 +116,11 @@ mysql_free_result($jlhwp);
             <div class="wrapper wrapper-content">
 
 
-<div class="row">
+
+
+
+
+		  <div class="row">
 
 <div class="col-lg-3">
                         <div class="ibox float-e-margins">
@@ -184,7 +188,7 @@ mysql_free_result($jlhwp);
                                         <span class="pull-right text-right">
                                         <small>Information: <strong></strong></small>
                                             <br/>
-                                            Jumlah Wajib Pajak : 8
+                                            Jumlah Wajib Pajak : <?php echo $jwp;?>
                                         </span>
                                         <h1 class="m-b-xs">
                                             Data Pajak - <i>weekly</i>
@@ -215,21 +219,17 @@ mysql_free_result($jlhwp);
                         </div>
                     </div>
                 </div>
-
+			
 			<div class="row">
         <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
 
-                        <h5>Data Transaksi Masuk - <i>Live Traffic</i></h5>
-						
-						
+                        <h5>Data Transaksi Masuk - <i>Live Traffic</i></h5>												
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
-                            </a>
-                           
-                            
+                            </a>                                                      
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
@@ -266,6 +266,9 @@ mysql_free_result($jlhwp);
             </div><!-- /.col -->
           </div><!-- /.row -->
 
+
+
+			
 
 			
 
@@ -416,7 +419,7 @@ include "footer.php";
       } );
 	  setInterval( function () {
             table.ajax.reload();
-      }, 10000 );
+      }, 5000 );
       
 
 	  $('#example tbody').on('click', 'tr', function () {

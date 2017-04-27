@@ -27,7 +27,7 @@ if (isset($_GET["tanggal1"]) && isset($_GET["tanggal2"])) {
 
 $SQL = "SELECT ucase(device.wpname) as wpname, DATE_FORMAT(tgltransaksi,'%d/%m/%Y') as 'tanggal',"
 . " sum(round( (select nilai_pajak from kategori where device.kategoriid = id) * struk.jumlah, 2)) as pajak"
-. " FROM struk,device "
+. " FROM struk,device,merchant "
 . " WHERE struk.deviceid = device.deviceid"
 . $where . " GROUP BY DATE_FORMAT(tgltransaksi,'%d/%m/%Y'), wpname"
 . " ORDER BY wpname, tgltransaksi";

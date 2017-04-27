@@ -8,8 +8,8 @@ if(!empty ($_SESSION['long']))
 	$zoom="13";
 }else
 {
-    $long="101.430248";
-    $lat="0.535452";
+    $long="107.2894948";
+    $lat="-6.3289593";
 	$zoom="13";
 	$status="";    
 }
@@ -229,7 +229,7 @@ include "navi.php";
                         </div>
                         <div class="col-xs-8 text-right">
                             <span> TOTAL </span>
-                            <h2 class="font-bold">7</h2>
+                            <h2 class="font-bold">5</h2>
                         </div>
                     </div>
                 </div>
@@ -241,8 +241,11 @@ include "navi.php";
                             <i class="fa fa-check fa-5x"></i>
                         </div>
                         <div class="col-xs-8 text-right">
+
                             <span> OK </span>
-                            <h2 class="font-bold">6</h2>
+							<?php $array1 = array($state); ?>
+
+                            <h2 class="font-bold"><?php echo $state[0] ; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -255,7 +258,8 @@ include "navi.php";
                         </div>
                         <div class="col-xs-8 text-right">
                             <span> WARNING </span>
-                            <h2 class="font-bold">0</h2>
+							<?php $array1 = array($state); ?>
+                            <h2 class="font-bold"><?php echo $state[1] ; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -268,7 +272,8 @@ include "navi.php";
                         </div>
                         <div class="col-xs-8 text-right">
                             <span> CRITICAL </span>
-                            <h2 class="font-bold">1</h2>
+<?php $array1 = array($state); ?>
+                            <h2 class="font-bold"><?php echo $state[2] ; ?></h2>
                         </div>
                     </div>
                 </div>
@@ -278,11 +283,13 @@ include "navi.php";
  <div class="col-lg-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>Status<i> - Realtime Online</i></h5>
+                        <h5>Status<i> - Ketersediaan Data</i></h5>
                         <div class="ibox-tools">
                             <a class="collapse-link">
                                 <i class="fa fa-chevron-up"></i>
-                            </a>                                                     
+                            </a>
+                           
+                            
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
@@ -296,6 +303,8 @@ include "navi.php";
 					   <th>WajibPajak</th>
                         <th>Alamat</th>
 						<th>Status</th>
+
+
                       </tr>
                     </thead>
                     
@@ -310,7 +319,9 @@ include "navi.php";
                     </tfoot>
                   </table>
                 </div><!-- /.box-body -->
-              </div><!-- /.box -->            
+              </div><!-- /.box -->
+
+            
             </div><!-- /.col -->
           </div><!-- /.row -->
 <div class="row">
@@ -320,19 +331,30 @@ include "navi.php";
                             <h5>Lokasi Perangkat</h5>
                         </div>
                         <div class="ibox-content">
+
                             <div style="height: 650px; width: 100%;" class="google-map" id="petaku"></div>
                         </div>
-                    </div>             
-            </div>               			
+                    </div>
+
+               
+            </div>
+
+                
+			
 <!---->
             </div>
+
+
+
             <?php
 include "footer.php";
 ?>
         </div>
         </div>
 
-     <!-- Mainly scripts -->    
+     <!-- Mainly scripts -->
+    
+    
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/plugins/jeditable/jquery.jeditable.js"></script>

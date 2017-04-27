@@ -38,6 +38,7 @@ session_start();
                         <li><a href="tr_detail.php">Detail Transaksi</a></li>
                         <li><a href="rpt_harian.php">Laporan Harian</a></li>
                         <li><a href="rpt_bulanan.php">Laporan Bulanan</a></li>
+			<li><a href="report_himpun_data.php">Penghimpunan Data</a></li>
                     </ul>
                 </li>
                 
